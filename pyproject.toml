@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Vasilii Stakrotckii <inferno681@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
+alembic = "^1.13.1"
+sqlalchemy = "^2.0.30"
+pydantic-settings = "^2.2.1"
+asyncpg = "^0.29.0"
+fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
+pydantic = "^2.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+skip-string-normalization = true
+line-length = 79
+include_trailing_comma = true
+
+[tool.isort]
+profile = "black"
+line_length = 79
+include_trailing_comma = true
+
+[tool.flake8]
+ignore = "N811 W503"
