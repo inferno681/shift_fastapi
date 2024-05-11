@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from app.api import api_router
+# from app.api import api_router
 from app.auth import auth_router
 from app.core.config import config
 
@@ -10,12 +10,12 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title=config.app_title,
-    description=config.description,
+    title=config.APP_TITLE,
+    description=config.APP_DESCRIPTION,
     openapi_tags=tags_metadata,
 )
 
-app.include_router(api_router)
+# app.include_router(api_router)
 app.include_router(auth_router)
 
 if __name__ == '__main__':

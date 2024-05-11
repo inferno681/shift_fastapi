@@ -1,54 +1,76 @@
-import uuid
-from typing import Optional
+from typing import Union
+from urllib.request import Request
 
-from fastapi import Depends, Request
-from fastapi_users import BaseUserManager, FastAPIUsers, IntegerIDMixin
+from fastapi import Depends
+from fastapi_users import (
+    BaseUserManager,
+    FastAPIUsers,
+    IntegerIDMixin,
+    InvalidPasswordException,
+)
 from fastapi_users.authentication import (
     AuthenticationBackend,
     BearerTransport,
     JWTStrategy,
 )
-from fastapi_users.db import SQLAlchemyUserDatabase
+from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import config
-from app.core.db import User, get_user_db
+from app.core.db import get_async_session
+from app.models.user import User
+from app.schemas.user import UserCreate
 
 
-class UserManager(IntegerIDMixin, BaseUserManager[User, uuid.UUID]):
-    reset_password_token_secret = config.SECRET.get_secret_value()
-    verification_token_secret = config.SECRET.get_secret_value()
-
-    async def on_after_register(self, user: User, request: Optional[Request] = None):
-        print(f"User {user.id} has registered.")
-
-    async def on_after_forgot_password(
-        self, user: User, token: str, request: Optional[Request] = None
-    ):
-        print(f"User {user.id} has forgot their password. Reset token: {token}")
-
-    async def on_after_request_verify(
-        self, user: User, token: str, request: Optional[Request] = None
-    ):
-        print(f"Verification requested for user {user.id}. Verification token: {token}")
-
-
-async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db)):
-    yield UserManager(user_db)
-
-
-bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
+async def get_user_db(session: AsyncSession = Depends(get_async_session)):
+    yield SQLAlchemyUserDatabase(session, User)
 
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=config.SECRET.get_secret_value(), lifetime_seconds=3600)
+    return JWTStrategy(
+        secret=config.SECRET.get_secret_value(),
+        lifetime_seconds=3600
+    )
 
+
+bearer_transport = BearerTransport(tokenUrl='auth/jwt/login')
 
 auth_backend = AuthenticationBackend(
-    name="jwt",
+    name='jwt',
     transport=bearer_transport,
     get_strategy=get_jwt_strategy,
 )
 
-fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
 
-current_active_user = fastapi_users.current_user(active=True)
+class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
+    async def on_after_register(
+        self, user: User, request: Request | None = None
+    ):
+        ...
+
+    async def validate_password(
+        self,
+        password: str,
+        user: Union[UserCreate, User],
+    ) -> None:
+        if len(password) < 3:
+            raise InvalidPasswordException(
+                reason='Password should be at least 3 characters'
+            )
+        if user.email in password:
+            raise InvalidPasswordException(
+                reason='Password should not contain e-mail'
+            )
+
+
+async def get_user_manager(user_db=Depends(get_user_db)):
+    yield UserManager(user_db)
+
+
+fastapi_users = FastAPIUsers[User, int](
+    get_user_manager,
+    [auth_backend],
+)
+
+current_user = fastapi_users.current_user(active=True)
+current_superuser = fastapi_users.current_user(active=True, superuser=True)
