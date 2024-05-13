@@ -15,5 +15,11 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8"
     )
 
+    @property
+    def DATABASE_URL(self):
+        return ("postgresql+asyncpg://"
+                f"{self.DB_USERNAME}:{self.DB_PASSWORD.get_secret_value()}"
+                f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}")
+
 
 config = Settings()

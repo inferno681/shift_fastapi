@@ -10,10 +10,12 @@ from app.core.db import Base
 class User(SQLAlchemyBaseUserTable[int], Base):
     """Модель пользователя"""
 
-    created = Column(DateTime, default=datetime.now)
+    username = Column(String(LENGTH_LIMITS_USER_FIELDS),
+                      nullable=False, unique=True)
     first_name = Column(String(LENGTH_LIMITS_USER_FIELDS), nullable=False)
     last_name = Column(String(LENGTH_LIMITS_USER_FIELDS), nullable=False)
     middle_name = Column(String(LENGTH_LIMITS_USER_FIELDS))
+    created = Column(DateTime, default=datetime.now)
     salary = Column(DECIMAL(precision=10, scale=2))
     next_promotion = Column(Date)
 

@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import declarative_base, declared_attr, sessionmaker
 
 from app.core.config import config
-from app.core.constants import DATABASE_URL
 
 
 class PreBase:
@@ -16,13 +15,7 @@ class PreBase:
 
 Base = declarative_base(cls=PreBase)
 
-engine = create_async_engine(DATABASE_URL.format(
-    DB_USERNAME=config.DB_USERNAME,
-    DB_PASSWORD=config.DB_PASSWORD.get_secret_value(),
-    DB_HOST=config.DB_HOST,
-    DB_PORT=config.DB_PORT,
-    DB_NAME=config.DB_NAME,
-))
+engine = create_async_engine(config.DATABASE_URL)
 
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession)
 
