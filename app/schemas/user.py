@@ -13,7 +13,11 @@ class UserRead(schemas.BaseUser[int]):
 
 
 class UserCreate(schemas.BaseUserCreate):
-    pass
+    first_name: str
+    last_name: str
+    middle_name: str | None = None
+    salary: condecimal(gt=0, max_digits=10, decimal_places=2)
+    next_promotion: date
 
 
 class UserUpdate(BaseModel):
