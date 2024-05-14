@@ -15,7 +15,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 config.set_main_option(
-    "sqlalchemy.url", conf.DATABASE_URL + "?async_fallback=True")
+    "sqlalchemy.url", conf.DATABASE_URL + "?async_fallback=True"
+)
 
 target_metadata = Base.metadata
 

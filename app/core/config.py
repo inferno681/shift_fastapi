@@ -17,9 +17,11 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self):
-        return ("postgresql+asyncpg://"
-                f"{self.DB_USERNAME}:{self.DB_PASSWORD.get_secret_value()}"
-                f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}")
+        return (
+            "postgresql+asyncpg://"
+            f"{self.DB_USERNAME}:{self.DB_PASSWORD.get_secret_value()}"
+            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        )
 
 
 config = Settings()

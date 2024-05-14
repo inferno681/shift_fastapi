@@ -8,8 +8,7 @@ from app.core import config
 tags_metadata = [
     {"name": "user", "description": "Запросы пользователя"},
     {"name": "auth", "description": "Запросы аунтентификации"},
-    {"name": "users", "description": "Запросы данных пользователей"}
-
+    {"name": "users", "description": "Запросы данных пользователей"},
 ]
 
 app = FastAPI(
@@ -21,5 +20,5 @@ app = FastAPI(
 app.include_router(api_router)
 app.include_router(auth_router)
 
-if __name__ == '__main__':
-    uvicorn.run(app, host='localhost', port=8000, log_level="info")
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000, log_level="info")

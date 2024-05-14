@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get(
-    '/salary',
+    "/salary",
     response_model=SalaryRead,
 )
 async def get_salary(

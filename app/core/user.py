@@ -28,15 +28,14 @@ async def get_user_db(session: AsyncSession = Depends(get_async_session)):
 
 def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(
-        secret=config.SECRET.get_secret_value(),
-        lifetime_seconds=3600
+        secret=config.SECRET.get_secret_value(), lifetime_seconds=3600
     )
 
 
-bearer_transport = BearerTransport(tokenUrl='auth/jwt/login')
+bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 
 auth_backend = AuthenticationBackend(
-    name='jwt',
+    name="jwt",
     transport=bearer_transport,
     get_strategy=get_jwt_strategy,
 )
@@ -45,8 +44,7 @@ auth_backend = AuthenticationBackend(
 class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     async def on_after_register(
         self, user: User, request: Request | None = None
-    ):
-        ...
+    ): ...
 
     async def validate_password(
         self,
@@ -55,11 +53,11 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     ) -> None:
         if len(password) < 3:
             raise InvalidPasswordException(
-                reason='Password should be at least 3 characters'
+                reason="Password should be at least 3 characters"
             )
         if user.email in password:
             raise InvalidPasswordException(
-                reason='Password should not contain e-mail'
+                reason="Password should not contain e-mail"
             )
 
 

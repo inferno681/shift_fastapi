@@ -10,8 +10,9 @@ from app.core import Base
 class User(SQLAlchemyBaseUserTable[int], Base):
     """Модель пользователя"""
 
-    username = Column(String(LENGTH_LIMITS_USER_FIELDS),
-                      nullable=False, unique=True)
+    username = Column(
+        String(LENGTH_LIMITS_USER_FIELDS), nullable=False, unique=True
+    )
     first_name = Column(String(LENGTH_LIMITS_USER_FIELDS), nullable=False)
     last_name = Column(String(LENGTH_LIMITS_USER_FIELDS), nullable=False)
     middle_name = Column(String(LENGTH_LIMITS_USER_FIELDS))
@@ -20,5 +21,5 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     next_promotion = Column(Date, default=datetime.now())
 
     __table_args__ = (
-        CheckConstraint(salary > 0, name='salary_positive_check'),
+        CheckConstraint(salary > 0, name="salary_positive_check"),
     )
