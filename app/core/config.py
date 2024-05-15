@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     DB_USERNAME: str
     DB_PASSWORD: SecretStr
     DB_NAME: str
+    REGISTRATION_ROUTER: bool
+    USERS_ROUTER: bool
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8"
     )
