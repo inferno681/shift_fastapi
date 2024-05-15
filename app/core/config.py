@@ -8,9 +8,9 @@ class Settings(BaseSettings):
     SECRET: SecretStr
     DB_HOST: str
     DB_PORT: int
-    DB_USERNAME: str
-    DB_PASSWORD: SecretStr
-    DB_NAME: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: SecretStr
+    POSTGRES_DB: str
     REGISTRATION_ROUTER: bool
     USERS_ROUTER: bool
 
@@ -22,8 +22,8 @@ class Settings(BaseSettings):
     def DATABASE_URL(self):
         return (
             "postgresql+asyncpg://"
-            f"{self.DB_USERNAME}:{self.DB_PASSWORD.get_secret_value()}"
-            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            f"{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD.get_secret_value()}"
+            f"@{self.DB_HOST}:{self.DB_PORT}/{self.POSTGRES_DB}"
         )
 
 

@@ -12,8 +12,8 @@ services:
     ports:
       - "8001:8000"
     volumes:
-      - ./.env:/app
+      - ./.env:/app/.env
     depends_on:
       - db
 volumes:
-  db_value:
+  pg_data:

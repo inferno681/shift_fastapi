@@ -57,9 +57,9 @@ poetry update
   SECRET = Secret
   DB_HOST = localhost
   DB_PORT = 5432
-  DB_USERNAME = user
-  DB_PASSWORD = secret_password
-  DB_NAME = postgres
+  POSTGRES_USER = user
+  POSTGRES_PASSWORD = secret_password
+  POSTGRES_DB = postgres
   REGISTRATION_ROUTER=True
   USERS_ROUTER=True
   ```
@@ -87,9 +87,9 @@ poetry update
   SECRET = Secret
   DB_HOST = localhost
   DB_PORT = 5432
-  DB_USERNAME = user
-  DB_PASSWORD = secret_password
-  DB_NAME = postgres
+  POSTGRES_USER = user
+  POSTGRES_PASSWORD = secret_password
+  POSTGRES_DB = postgres
   REGISTRATION_ROUTER=True
   USERS_ROUTER=True
     ```
@@ -99,7 +99,7 @@ poetry update
   ```
 - В контейнере **backend** примените миграции:
   ```
-  ~$ docker compose -f docker-compose-prod.yaml exec backend alembic upgrade head
+  ~$ docker compose -f docker-compose-prod.yaml exec backend poetry run alembic upgrade head
   ```
 
 Документация к API будет доступна по url-адресу [127.0.0.1/redoc](http://127.0.0.1/redoc)
