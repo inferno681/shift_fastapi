@@ -5,7 +5,7 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
-  COMPOSE_FILE: docker-compose-dev.yaml
+  COMPOSE_FILE: infra/docker-compose-dev.yaml
 
 services:
   - docker:latest
