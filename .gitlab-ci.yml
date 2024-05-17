@@ -1,0 +1,44 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  COMPOSE_FILE: docker-compose-dev.yaml
+
+services:
+  - docker:latest
+
+pytest:
+  stage: test
+  image: docker/compose:latest
+  before_script:
+    - docker-compose --version
+    - docker-compose up -d
+    - until docker-compose exec db pg_isready --timeout=0 --dbname=postgres --host=db; do echo "Waiting for postgres..."; sleep 1; done
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run pytest
+  after_script:
+    - docker-compose down
+  only:
+    - main
+
+build_and_push_to_docker_hub:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:latest-dind
+  before_script:
+    - docker info
+  script:
+    - docker buildx create --use
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKERHUB_USERNAME/$DOCKERHUB_BACKEND:latest --push .
+  only:
+    - main
+  dependencies:
+    - pytest
