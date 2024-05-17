@@ -5,7 +5,7 @@ from app.main import app
 
 TESTUSER_LOGIN_DATA = {
     "username": "test@test.com",
-    "password": "test_password",
+    "password": "password",
 }
 
 AUTHENTICATED_RESPONSE = {"salary": "777.00", "next_promotion": "2027-05-14"}

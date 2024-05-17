@@ -3,7 +3,11 @@ from datetime import datetime
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy import CheckConstraint, Column, Date, DateTime, DECIMAL, String
 
-from app.core.constants import LENGTH_LIMITS_USER_FIELDS
+from app.core.constants import (
+    DECIMAL_PLACES,
+    LENGTH_LIMITS_DECIMAL_FIELDS,
+    LENGTH_LIMITS_USER_FIELDS,
+)
 from app.core import Base
 
 
@@ -17,7 +21,10 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     last_name = Column(String(LENGTH_LIMITS_USER_FIELDS), nullable=False)
     middle_name = Column(String(LENGTH_LIMITS_USER_FIELDS))
     created = Column(DateTime, default=datetime.now)
-    salary = Column(DECIMAL(precision=10, scale=2), default=1)
+    salary = Column(
+        DECIMAL(precision=LENGTH_LIMITS_DECIMAL_FIELDS, scale=DECIMAL_PLACES),
+        default=1,
+    )
     next_promotion = Column(Date, default=datetime.now())
 
     __table_args__ = (

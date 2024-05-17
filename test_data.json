@@ -1,0 +1,44 @@
+[
+        {
+            "username" : "testuser",
+            "first_name" : "test_name",
+            "last_name" : "test_surname",
+            "middle_name" : "",
+            "created" : "2024-05-14 19:59:49.818",
+            "salary" : 777.00,
+            "next_promotion" : "2027-05-14",
+            "email" : "test@test.com",
+            "hashed_password" : "$argon2id$v=19$m=65536,t=3,p=4$ywdwWMqnYEnCqkUr1B2l3w$ZpTcobmVrqLdjqgemduNmN19zUbcBAKZM4vCip2+8g4",
+            "is_active" : true,
+            "is_superuser" : false,
+            "is_verified" : false
+        },
+        {
+            "username" : "user1",
+            "first_name" : "Ivan",
+            "last_name" : "Ivanov",
+            "middle_name" : "Ivanovich",
+            "created" : "2024-05-14 19:59:49.818",
+            "salary" : 1.00,
+            "next_promotion" : "2024-05-15",
+            "email" : "ivan@test.com",
+            "hashed_password" : "$argon2id$v=19$m=65536,t=3,p=4$2Yk+0giANJwi\/gxfr0iTvg$3obyHpYLWzC48Wfp6N\/PxmTczX7EMc0fbPAEnPKltaY",
+            "is_active" : true,
+            "is_superuser" : false,
+            "is_verified" : false
+        },
+        {
+            "username" : "user2",
+            "first_name" : "Petar",
+            "last_name" : "Petrov",
+            "middle_name" : "",
+            "created" : "2024-05-14 19:59:49.818",
+            "salary" : 1.00,
+            "next_promotion" : "2024-05-15",
+            "email" : "petar@test.com",
+            "hashed_password" : "$argon2id$v=19$m=65536,t=3,p=4$YVCUP47kxRf8\/8YR0IG45w$xWkLMfoEqUct9wffgTxECrtoIdky1aqwEJsKSgh1tBY",
+            "is_active" : true,
+            "is_superuser" : false,
+            "is_verified" : false
+        }
+    ]

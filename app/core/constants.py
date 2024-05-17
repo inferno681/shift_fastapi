@@ -1,1 +1,5 @@
+"""Константы для моделей и схем"""
+
+LENGTH_LIMITS_DECIMAL_FIELDS = 10
 LENGTH_LIMITS_USER_FIELDS = 150
+DECIMAL_PLACES = 2

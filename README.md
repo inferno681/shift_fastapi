@@ -65,9 +65,14 @@ poetry update
   ```
 
 
-Находясь в корневой папке проекта примените миграции.
+Находясь в корневой папке проекта примените миграции:
   ```
   alembic upgrade head
+  ```
+
+Импортируйте тестовые данные:
+  ```
+  python import_test_data.py
   ```
 
 Для запуска сервера используйте данную команду:
@@ -85,7 +90,7 @@ poetry update
   APP_TITLE = Shift FastAPI
   APP_DESCRIPTION = Salary view service
   SECRET = Secret
-  DB_HOST = localhost
+  DB_HOST = db
   DB_PORT = 5432
   POSTGRES_USER = user
   POSTGRES_PASSWORD = secret_password
@@ -97,9 +102,10 @@ poetry update
   ```
   ~$ docker compose -f docker-compose-prod.yaml up -d
   ```
-- В контейнере **backend** примените миграции:
+- В контейнере **backend** примените миграции и импортируйте тестовые данные:
   ```
   ~$ docker compose -f docker-compose-prod.yaml exec backend poetry run alembic upgrade head
+  ~$ docker compose -f docker-compose-prod.yaml exec backend poetry run import_test_data.py
   ```
 
 Документация к API будет доступна по url-адресу [127.0.0.1/redoc](http://127.0.0.1/redoc)

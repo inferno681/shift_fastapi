@@ -3,6 +3,8 @@ from datetime import date
 from fastapi_users import schemas
 from pydantic import BaseModel, condecimal
 
+from app.core.constants import DECIMAL_PLACES, LENGTH_LIMITS_DECIMAL_FIELDS
+
 
 class UserBase(BaseModel):
     username: str
@@ -12,7 +14,11 @@ class UserBase(BaseModel):
 
 
 class UserRead(schemas.BaseUser[int], UserBase):
-    salary: condecimal(gt=0, max_digits=10, decimal_places=2)
+    salary: condecimal(
+        gt=0,
+        max_digits=LENGTH_LIMITS_DECIMAL_FIELDS,
+        decimal_places=DECIMAL_PLACES,
+    )
     next_promotion: date
 
 
