@@ -105,7 +105,7 @@ poetry update
 - В контейнере **backend** примените миграции и импортируйте тестовые данные:
   ```
   ~$ docker compose -f docker-compose-prod.yaml exec backend poetry run alembic upgrade head
-  ~$ docker compose -f docker-compose-prod.yaml exec backend poetry run import_test_data.py
+  ~$ docker compose -f docker-compose-prod.yaml exec backend python import_test_data.py
   ```
 
 Документация к API будет доступна по url-адресу [127.0.0.1/redoc](http://127.0.0.1/redoc)
